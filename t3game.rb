@@ -10,9 +10,18 @@ WIN_SET =  [[0,1,2], [3,4,5], [6,7,8],
 			[0,3,6], [1,4,7], [2,5,8],
 			[0,4,8], [2,4,6]]
 
+A_PHRASES = ["Contacting skynet...", "Steping up to the plate", "Pouring the whiskey",
+			"Preparing laser pointer", "Go long", "Droping the hammer", "consolidating fastners",
+			"Preparing the evil eye"]
+
 PHRASES = ["Droping mic", "Training kitten on target",
-			"Checking on gumbo", "All the things...yeah you heard me"
-			 ]
+			"Checking on gumbo", "All the things...yeah you heard me",
+			"Setting DVR to record how its made", "Shipping exploding crankshafts",
+			"HOOPLAAAA", "Reconciling Lamas" ]
+
+T_PHRASES = ["Tremble in thy socks", "Prepare for the running of the kittens", 
+			"The gumbo is coming along quite nicely", "Prepare you last meal",
+			"I know were to place the chicken wing", "Barbecue"]
 
 class Game
 	def intialize
@@ -27,6 +36,10 @@ class Game
 		#{board[6]} | #{board[7]} | #{board[8]}
 
 		"
+	end
+
+	def game_over(board)
+		win?(board) || draw(board)
 	end
 
 	def win?(board)
@@ -57,6 +70,7 @@ class Game
 
 	def take_turn_com(mark, board)
 		if mark == HUMAN_MARK
+			sleep 1
 			puts "Make your move human"
 			pick = gets.chomp.to_i
 			until can_make_move(board).include?(pick)
@@ -65,14 +79,22 @@ class Game
 			end
 		
 		else
+			mark = COM_MARK
+			a_phrase = A_PHRASES.sample
 			phrase = PHRASES.sample
-			puts "Contacting skynet....."
-			sleep 2
+			t_phrase = T_PHRASES.sample
+			puts "#{a_phrase}....."
+			sleep 3
 			puts
 			puts "#{phrase}......"
 			puts
 			sleep 2
+			puts "#{t_phrase}....."
+			puts
+			sleep 2
 			puts "Making my move"
+			puts
+			sleep 1
 			until can_make_move(board).include?(pick)
 			pick = rand(1..9).to_i
 			end
@@ -92,11 +114,15 @@ class Game
 		update_board(board, pick, current_mark)
 	end
 
-	def postmortem_com(mark)
-		if mark == HUMAN_MARK
-		puts "The Human is Victorious"
-	else
+	def postmortem_com(mark, board)
+		if mark = HUMAN_MARK
+		puts "NOOOOOO!!!!"
+		sleep 2
+		puts "The puny human wins"
+	elsif mark = COM_MARK
 		puts "The Machine has conqured all!"
+	else
+		puts "The human is a worthy opponent....the game is a draw"
 		end 
 	end
 
@@ -104,8 +130,7 @@ class Game
 		puts "Human player is X, the computer is O"
 		board = (1..9).to_a
 		mark = COM_MARK
-		binding.pry
-		until  win?(board) || draw(board)
+		until  game_over(board)
 			if mark == COM_MARK
 				mark = HUMAN_MARK
 				take_turn_com(mark, board)
@@ -114,7 +139,7 @@ class Game
 				take_turn_com(mark, board)
 			end
 		end
-		postmortem_com(mark)
+		postmortem_com(mark, board)
 	end
 
 
@@ -144,12 +169,6 @@ class Game
 	end
 end
 
-#def play_game
-#	game = Game.new
-#	game.get_player
-#	game.play 
-#end
-#play_game
 
 
 
