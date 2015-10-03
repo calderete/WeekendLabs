@@ -3,6 +3,8 @@ require './t3player'
 require './t3board'
 MARK1 = "X"
 MARK2 = "O"
+HUMAN_MARK = "X"
+COM_MARK = "O"
 
 WIN_SET =  [[1,2,3], [3,4,5], [6,7,8],
 			[0,3,6], [1,4,7], [2,5,8],
@@ -47,6 +49,35 @@ class Game
 		show_board(board)
 	end
 
+	def update_board_com(mark, pick, board)
+		board[pick -1] = mark
+		show_board(board)
+	 	
+	end 
+
+
+	def take_turn_com(mark, board)
+		if mark == HUMAN_MARK
+			puts "Make your move human"
+			pick = gets.chomp.to_i
+			until can_make_move(board).include?(pick)
+				puts "#{pick} is not a valid space puny human"
+				pick = gets.chomp.to_i
+			end
+			update_board_com(mark, pick, board)
+		
+		else
+			puts "Contacting skynet"
+			puts
+			puts "Making my move"
+			until can_make_move(board).include?(pick)
+			pick = rand(1..9).to_i
+			end
+		end
+		update_board_com(mark, pick, board)
+	end
+
+
 	def take_turn(board, mark, player)
 		puts "#{player} Make your move"
 		pick = gets.chomp.to_i
@@ -58,10 +89,26 @@ class Game
 		update_board(board, pick, current_mark)
 	end
 
+	def play_computer
+		puts "Human player is X, the computer is O"
+		board = (1..9).to_a
+		mark = COM_MARK
+		until  game_over(board)
+			if mark == COM_MARK
+				mark = HUMAN_MARK
+				take_turn_com(mark, board)
+			else
+				mark = COM_MARK
+				take_turn_com(mark, board)
+			end
+		end
+
+	end
 
 
 
-	def play
+
+	def play_human
 		board = (1..9).to_a
 		player1 = HumanPlayer.new
 		player2 = HumanPlayer.new
