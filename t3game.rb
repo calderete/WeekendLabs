@@ -6,9 +6,13 @@ MARK2 = "O"
 HUMAN_MARK = "X"
 COM_MARK = "O"
 
-WIN_SET =  [[1,2,3], [3,4,5], [6,7,8],
+WIN_SET =  [[0,1,2], [3,4,5], [6,7,8],
 			[0,3,6], [1,4,7], [2,5,8],
 			[0,4,8], [2,4,6]]
+
+PHRASES = ["Droping mic", "Training kitten on target",
+			"Checking on gumbo", "All the things...yeah you heard me"
+			 ]
 
 class Game
 	def intialize
@@ -35,11 +39,6 @@ class Game
 		can_make_move(board).empty?
 	end
 
-	def game_over(board)
-		win?(board) || draw(board)
-	end
-
-
 	def can_make_move(board)
 		board.reject { |x| x.is_a?(String) }
 	end
@@ -64,11 +63,15 @@ class Game
 				puts "#{pick} is not a valid space puny human"
 				pick = gets.chomp.to_i
 			end
-			update_board_com(mark, pick, board)
 		
 		else
-			puts "Contacting skynet"
+			phrase = PHRASES.sample
+			puts "Contacting skynet....."
+			sleep 2
 			puts
+			puts "#{phrase}......"
+			puts
+			sleep 2
 			puts "Making my move"
 			until can_make_move(board).include?(pick)
 			pick = rand(1..9).to_i
@@ -89,11 +92,20 @@ class Game
 		update_board(board, pick, current_mark)
 	end
 
+	def postmortem_com(mark)
+		if mark == HUMAN_MARK
+		puts "The Human is Victorious"
+	else
+		puts "The Machine has conqured all!"
+		end 
+	end
+
 	def play_computer
 		puts "Human player is X, the computer is O"
 		board = (1..9).to_a
 		mark = COM_MARK
-		until  game_over(board)
+		binding.pry
+		until  win?(board) || draw(board)
 			if mark == COM_MARK
 				mark = HUMAN_MARK
 				take_turn_com(mark, board)
@@ -102,7 +114,7 @@ class Game
 				take_turn_com(mark, board)
 			end
 		end
-
+		postmortem_com(mark)
 	end
 
 
