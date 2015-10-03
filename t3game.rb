@@ -29,9 +29,14 @@ class Game
 		end
 	end
 
-	def game_over(board)
-		win?(board)
+	def draw(board)
+		can_make_move(board).empty?
 	end
+
+	def game_over(board)
+		win?(board) || draw(board)
+	end
+
 
 	def can_make_move(board)
 		board.reject { |x| x.is_a?(String) }
@@ -52,6 +57,9 @@ class Game
 		end
 		update_board(board, pick, current_mark)
 	end
+
+
+
 
 	def play
 		board = (1..9).to_a
@@ -75,7 +83,6 @@ class Game
 		end
 	end
 	end
-
 end
 
 #def play_game
