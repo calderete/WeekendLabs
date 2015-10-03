@@ -1,41 +1,61 @@
 require 'pry'
 require './t3player'
 require './t3board'
-
+MARK1 = "X"
+MARK2 = "O"
 
 class Game
 	def intialize
-		@new_player = HumanPlayer.new
+	
 	end
 
-	def get_player
-		player_1 = HumanPlayer.new
-		player_1.get_name_one
-		player_2 = HumanPlayer.new
-		player_2.get_name_two
-		puts player_1.player_one_mark
-		puts player_2.player_two_mark
-		@player_1 = player_1
-		@player_2 = player_2
-	end
+	
+
+	
 	def game_over
-	end
-	def take_turn
-		display = Board.new
-		diplay.update_board
+		false
 	end
 
-	def player_switch
-		@player == @player_1 ? @player_2 : @player_1
-	end
+	def take_turn(mark, player, display)
+		puts "#{player} Make your move"
+		pick = gets.chomp.to_i
+		board = (1..9).to_a 
+		display.update_board(mark, pick, board)
+		display.show_board(board)
+
+		end
 
 	def play
-		until game_over(board)
-			player_switch
-			take_turn
+		diplay = Board.new
+		player1 = HumanPlayer.new
+		player2 = HumanPlayer.new
+		player1.get_name_one
+		player2.get_name_two
+		player = player2
+		mark = MARK2
+		until game_over
+		if player == player2
+				player = player1
+				mark = MARK1
+			take_turn(mark, player, display)
+		else
+			player = player1
+			mark = MARK2 
+			take_turn(mark, player, display)
 		end
 	end
+	end
+
 end
 
-test = Game.new
-test.get_player
+#def play_game
+#	game = Game.new
+#	game.get_player
+#	game.play 
+#end
+#play_game
+
+
+
+
+
