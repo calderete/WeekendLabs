@@ -8,25 +8,35 @@ class Game
 	def intialize
 	
 	end
+	board = (1..9).to_a
+	def show_board(board)
 
-	
+		puts"
+		#{board[0]} | #{board[1]} | #{board[2]}
+		#{board[3]} | #{board[4]} | #{board[5]}
+		#{board[6]} | #{board[7]} | #{board[7]}
 
-	
+		"
+	end
+
 	def game_over
 		false
 	end
 
-	def take_turn(mark, player, display)
+	def update_board(board, pick, current_mark) 
+		board[pick -1] = current_mark
+		show_board(board)
+	end
+
+	def take_turn(board, mark, player)
 		puts "#{player} Make your move"
 		pick = gets.chomp.to_i
-		board = (1..9).to_a 
-		display.update_board(mark, pick, board)
-		display.show_board(board)
-
-		end
+		current_mark = mark
+		update_board(board, pick, current_mark)
+	end
 
 	def play
-		diplay = Board.new
+		board = (1..9).to_a
 		player1 = HumanPlayer.new
 		player2 = HumanPlayer.new
 		player1.get_name_one
@@ -37,11 +47,13 @@ class Game
 		if player == player2
 				player = player1
 				mark = MARK1
-			take_turn(mark, player, display)
+				name = "Player 1"
+			take_turn(board, mark, name)
 		else
 			player = player1
 			mark = MARK2 
-			take_turn(mark, player, display)
+			name = "Player 2"
+			take_turn(board, mark, name)
 		end
 	end
 	end
