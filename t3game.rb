@@ -78,6 +78,21 @@ class Game
 	 	
 	end 
 
+	def battle_turn(mark, board)
+		if mark == HUMAN_MARK
+			puts "The great Wizard makes his move"
+			until can_make_move(board).include?(pick)
+				pick = rand(1..9).to_i
+			end
+		else
+			mark = COM_MARK
+			puts "The Machine makes is move"
+			until can_make_move(board).include?(pick)
+				pick = rand(2..9).to_i
+			end
+		end
+		update_board_com(mark, pick, board)
+	end
 
 	def take_turn_com(mark, board)
 		if mark == HUMAN_MARK
@@ -125,8 +140,35 @@ class Game
 		update_board(board, pick, current_mark)
 	end
 
+	def battle_postmortem(mark, boar)
+		if mark == HUMAN_MARK
+			puts "The Wizard has slain the machine"
+		elsif mark = COM_MARK
+			puts "The machine has conqured all"
+		else
+			puts "Draw game"
+		end
+		replay
+	end
+
+	def zero_player
+		puts "The Wizard's mark is X, The infernal machine's is X"
+		board = (1..9).to_a
+		mark = COM_MARK
+		until game_over(board)
+			if mark == COM_MARK
+				mark = HUMAN_MARK
+				battle_turn(mark, board)
+			else
+				mark = COM_MARK
+				battle_turn(mark, board)
+			end
+		end
+		battle_postmortem(mark, board)
+	end
+
 	def postmortem_com(mark, board)
-		if mark = HUMAN_MARK
+		if mark == HUMAN_MARK
 		puts "NOOOOOO!!!!"
 		sleep 2
 		puts "The puny human wins"
@@ -160,7 +202,7 @@ class Game
 		if choice == "y"
 			require './oo_tic_tac_toe'
 		else
-			puts "Thanks for playin"
+			puts "Thanks for playing"
 		end
 	end
 

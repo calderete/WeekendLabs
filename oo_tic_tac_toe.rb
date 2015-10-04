@@ -24,21 +24,24 @@ class PlayGame
 		sleep 2
 		puts  "please choose:"
 		sleep 1
-		puts  "One"
+		puts  "One Player"
 		sleep 1
-		puts  "Or two player mode"
+		puts  "Or Two Player Mode"
 		sleep 1
 		puts  
 		puts "1: One Player"
 		puts
 		puts "2: Two Player"
+		puts
 		puts ">>"
 		show_board(board)
 		choice = gets.chomp.to_i
 		if choice == 2
 			@game.play_human
-		else
+		elsif choice == 1
 			@game.play_computer
+		else
+			@game.zero_player
 		end
 	end
 	

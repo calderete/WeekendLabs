@@ -5,16 +5,16 @@ class HumanPlayer
 
 	end
 
-	def get_name_one
+	def get_name_one(name)
 		puts "Player one What is your name?"
-		player_name = gets.chomp
-		puts "X is your mark"
+		name = gets.chomp
+		puts "#{name} X is your mark!"
 	end
 
-	def get_name_two
+	def get_name_two(name)
 		puts "Player two what is your name?"
-		player_name = gets.chomp
-		puts "O is your mark"
+		name = gets.chomp
+		puts "#{name} O is your mark!"
 	end
 	
 end
