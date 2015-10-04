@@ -38,6 +38,17 @@ class Game
 		"
 	end
 
+	def replay
+		puts "Would you like to play again?: y/n"
+		choice = gets.chomp.downcase
+		if choice == "y"
+			require './oo_tic_tac_toe'
+			
+		else
+			puts "Thank you for playing"
+		end
+	end
+
 	def game_over(board)
 		win?(board) || draw(board)
 	end
@@ -84,7 +95,7 @@ class Game
 			phrase = PHRASES.sample
 			t_phrase = T_PHRASES.sample
 			puts "#{a_phrase}....."
-			sleep 3
+			sleep 2
 			puts
 			puts "#{phrase}......"
 			puts
@@ -119,11 +130,12 @@ class Game
 		puts "NOOOOOO!!!!"
 		sleep 2
 		puts "The puny human wins"
-	elsif mark = COM_MARK
+		elsif mark = COM_MARK
 		puts "The Machine has conqured all!"
-	else
+		else
 		puts "The human is a worthy opponent....the game is a draw"
 		end 
+		replay
 	end
 
 	def play_computer
@@ -142,8 +154,15 @@ class Game
 		postmortem_com(mark, board)
 	end
 
-
-
+	def postmortem
+		puts "Would you like to play again?"
+		choice = gets.chomp.downcase
+		if choice == "y"
+			require './oo_tic_tac_toe'
+		else
+			puts "Thanks for playin"
+		end
+	end
 
 	def play_human
 		board = (1..9).to_a
@@ -166,6 +185,7 @@ class Game
 			take_turn(board, mark, name)
 		end
 	end
+	postmortem
 	end
 end
 

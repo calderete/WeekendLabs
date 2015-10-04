@@ -18,6 +18,7 @@ class PlayGame
 	end
 
 	def greeting
+		#@game = Game.new
 		board = (1..9).to_a
 		puts "Welcome to tic tac toe"
 		sleep 2
@@ -40,6 +41,8 @@ class PlayGame
 			@game.play_computer
 		end
 	end
+	
+
 end
 
 new_game = PlayGame.new
