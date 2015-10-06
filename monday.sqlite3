@@ -1,0 +1,61 @@
+1: How many users are there?
+answer: 50
+SELECT id FROM users;
+
+2: What are the 5 most expensive items?
+answer 
+Multi_layered modular servie-desk
+Re-engineered fault-tolerant adapter
+Upgradable 24/7 access
+Quality-focused heuristic info-mediaries
+Enterprise-wide secondary firmware
+SELECT price, description FROM items ORDERED BY price ASC;
+
+3: What is the cheapest book? Does that change between the catagories?
+answer:
+De-engineered bi-directional portal. It is the cheapest book regardless of category.
+
+SELECT description, category, price FROM items WHERE category LIKE '%Books%' ORDER BY price ASC;
+
+4: Who lives at "6439 Zetta Hills, Willmouth, WY"?
+answer:
+Corine Little. They also have a residince at 54369 Wolff Forges, Lake Bryon, CA
+
+SELECT user_id FROM addresses WHERE street = '6439 Zetta Hills' AND state = 'WY' AND city = 'Willmouth';
+SELECT street, city, state FROM addresses WHERE user_id = 40;
+SELECT first_name, last_name FROM addresses WHERE id = 40;
+
+5:   ##TODO
+SELECT id FROM users WHERE first_name = 'Virginie' AND last_name = 'Mitchell';
+UPDATE addresses SET zip='10108' WHERE id = '39';
+
+
+6: How many items did we sell?
+answer: 2125
+SELECT SUM(quantity) FROM orders;
+
+
+7:
+INSERT INTO users(first_name, last_name, email) VALUES ('Charles', 'Alderete', 'codprestige10@gmail.com');
+
+INSERT INTO orders(user_id, item_id, quantity, created_at) VALUES ('51', '35', '600', '2015-03-22 9:15:45');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
